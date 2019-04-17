@@ -47,6 +47,10 @@ running on the host, it needs to have access to the same file - but the API stay
 
 ## Example usage: exposing limited access over HTTP
 
+For Docker:
+```
+./run -a containers -a images -a networks -a volumes -a info -a version
+```
 Using the same arguments as above, it's possible to provide a limited HTTP endpoint for the API.
 To do it, you have to use the separate [docker-proxy](https://github.com/titpetric/docker-proxy) project,
 which exposes the docker socket via HTTP. To expose our safe docker socket, use the same `-v` line
