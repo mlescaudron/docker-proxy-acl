@@ -1,10 +1,17 @@
 #!/bin/bash
 function go_docker {
+	DOCKER_NAME="docker-proxy-acl"
+	if [ "$(docker ps -a |grep -c $DOCKER_NAME)" = "1" ]; then
+        	echo "$DOCKER_NAME already exist, stop and remove"
+		docker stop $DOCKER_NAME && docker rm $DOCKER_NAME
+	fi
+
 	ARGS=""
 	if [ -f "docker.args" ]; then
 		ARGS=$(cat docker.args | xargs echo -n)
 	fi
-	docker run $ARGS -v `pwd`:/go/src/app -w /go/src/app golang go "$@"
+
+	docker run --name=$DOCKER_NAME $ARGS -v `pwd`:/go/src/app -w /go/src/app golang go "$@"
 }
 
 function go_fetch {
